@@ -1,25 +1,46 @@
-tasks = [""]
+import sys
+
+tasks = []
 
 while True:
     print("""
-| TO DO LIST |
+___________________________
+      | TO DO LIST |
+
 1. Add a task
 2. Remove a task
 3. View all tasks
 4. Mark a task as completed
-5. Exit\n """)
+5. Exit
+___________________________\n """)
 
     action = int(input())
     if action == 1:
-        print("\nEnter the task name: ")
-        task = input
-        tasks.insert(0, task)
+        task = input("\nEnter the task name: ")
+        tasks.append(task)
+        continue
+
     elif action == 2:
-        print(list)
+        delete = int(input("\nEnter task no. to delete\n"))
+        calculated = delete -1
+        del tasks[calculated]
+        print("\nTask removed.")
+        continue
+
     elif action == 3:
-        print(list)
+        for i, task in enumerate(tasks, start=1):
+            print("\n" + "Task:", i)
+            print(task)
+
+
     elif action == 4:
-        print(list)
+        print(tasks)
+
     elif action == 5:
         print("Exiting To-Do-List")
         break
+
+    else:
+        print("\n[ERROR]", file=sys.stderr)
+
+    
