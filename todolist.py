@@ -25,9 +25,13 @@ ___________________________\n """)
 
     def removeTask():
         delete = int(input("\nEnter task no. to delete\n"))
+        if delete in tasks:
+            print("\nTask removed.")
+        else: 
+            print("\n[ERROR] Could not find the given name")
+
         calculated = delete -1
         del tasks[calculated]
-        print("\nTask removed.")
 
     
     def viewTask():
@@ -35,9 +39,22 @@ ___________________________\n """)
             print("\nTask", "#" + str(i) + ":", "\n" + task)
 
     def markTask():
-        print(tasks)
+        return False
+        message = input("\nNumber of Task: ")
+                
+        for i, task in enumerate(tasks, start=1):
+            print("\nTask", "#" + str(i) + ":", "\n" + task)
+
+            solved = message -1
+            tasks[solved]
+            return True
+
+        if True:
+            print("Task completed.")
 
     action = int(input("Choose an action: "))
+    if action < 1:
+        print("[ERROR]", file=sys.stderr)
 
     if action == 1:
         addTask()
@@ -53,7 +70,7 @@ ___________________________\n """)
 
     elif action == 4:
         markTask()
-        print(tasks)
+        continue
 
     elif action == 5:
         print("Exiting Task-List")
