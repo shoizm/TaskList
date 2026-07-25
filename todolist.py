@@ -16,45 +16,54 @@ ___________________________\n """)
 
     def addTask():
         task = input("\nEnter the task name: \n")
-        if task in tasks:
+        if any(yomom["name"] == task for yomom in tasks):
             print("\n[ERROR] Task is already made!", file=sys.stderr)
-        else:
-            print("\nTask created.")
-            tasks.append(task)
-
+            return
+        tasks.append({
+            "name": task, 
+            "completed": False
+            })
+        print("\nTask Created.")
+        return
 
     def removeTask():
-        delete = int(input("\nEnter task no. to delete\n"))
+        viewTask()
+        delete = (int(input("\nEnter task No. to delete:\n"))-1)
         if delete in tasks:
             print("\nTask removed.")
-        else: 
-            print("\n[ERROR] Could not find the given name")
+        else:
+            print("\n[ERROR] Could not find the given task", file=sys.stderr)
+            return
+        del tasks[delete]
 
-        calculated = delete -1
-        del tasks[calculated]
-
-    
     def viewTask():
-        for i, task in enumerate(tasks, start=1):
-            print("\nTask", "#" + str(i) + ":", "\n" + task)
+        if not tasks:
+            print("\n[ERROR] No task found", file=sys.stderr)
+            return
 
+        for i, task in enumerate(tasks, start=1):
+            status = "/" if task["completed"] else "X"
+            print(f"\nTask #{i} [{status}]: {task['name']}")
+            
     def markTask():
-        return False
-        message = input("\nNumber of Task: ")
-                
-        for i, task in enumerate(tasks, start=1):
-            print("\nTask", "#" + str(i) + ":", "\n" + task)
+        if not tasks:
+            print("\n[ERROR] No task found", file=sys.stderr)
+            return
+        viewTask()
+        try:
+            num = int(input("\nNumber of Task: "))
+            if not (1 <= num <= len(tasks)):
+                print("\n[ERROR] Task not found.", file=sys.stderr)
+                return
+            tasks[num - 1]["completed"] = True
+            print("\nTask Completed.")
+        except ValueError:
+                print("\n[ERROR] Enter a valid number.")
 
-            solved = message -1
-            tasks[solved]
-            return True
-
-        if True:
-            print("Task completed.")
-
-    action = int(input("Choose an action: "))
-    if action < 1:
-        print("[ERROR]", file=sys.stderr)
+    try:
+        action = int(input("Choose an action: "))
+    except ValueError:
+        print("\n[ERROR] Enter valid numbers.")
 
     if action == 1:
         addTask()
@@ -73,8 +82,6 @@ ___________________________\n """)
         continue
 
     elif action == 5:
-        print("Exiting Task-List")
+        print("\n[EXITING]")
         break
 
-    else:
-        print("\n[ERROR]", file=sys.stderr)
