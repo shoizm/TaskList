@@ -29,6 +29,11 @@ ___________________________\n """)
         if any(taskname["name"] == task for taskname in tasks):
             print("\n[ERROR] Task is already made!", file=sys.stderr)
             return
+        
+        if task.strip() == "":
+            print("[ERROR] Task cannot be empty", file=sys.stderr)
+            return
+        
         tasks.append({"name": task, "completed": False})
         print("\nTask Created.")
         return
